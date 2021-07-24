@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from "react"
-
-import Card from "./Card"
-
 import axios from "axios";
 
+import Card from "./Card"
 
 const Deck = () => {
     const [breeds, setBreeds] = useState([]);
     const [isLoading, setIsloading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                setIsloading(true);
 
-    useEffect(async () => {
-        try {
-            setIsloading(true);
+                const { data } = await axios.get("https://api.thecatapi.com/v1/breeds?limit=15");
 
-            const { data } = await axios.get("https://api.thecatapi.com/v1/breeds?limit=10");
-
-            setBreeds(data);
-        } catch (error) {
-            console.log(error);
-            setErrorMessage("No Cats found :(")
-        } finally {
-            setIsloading(false);
+                setBreeds(data);
+            } catch (error) {
+                console.log(error);
+                setErrorMessage("No Cats found :(")
+            } finally {
+                setIsloading(false);
+            }
         }
 
+        fetchData()
     }, [])
 
     return (
-        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 pt-5">
+        <div className="row row-cols-1 row-cols-lg-2 g-4 py-5">
             {isLoading ? "Loading..."
                 : errorMessage ? errorMessage
                     : breeds.map((breed, index) => {
