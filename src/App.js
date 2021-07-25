@@ -1,9 +1,9 @@
-import './App.css';
+import Deck from "./components/Deck"
 
 function App() {
   return (
-    <div>
-      Hello World!
+    <div className="container">
+      <Deck />
     </div>
   );
 }
